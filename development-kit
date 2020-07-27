@@ -28,7 +28,7 @@ uninstallTool() {
     local tool=$1
     echo "Uninstalling $tool"
     if [[ $tool == "development-kit" ]]; then
-        rm -rf $HOME/.development-tools
+        rm -rf $HOME/.development-tools/development-kit
     else
         curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/$tool-kit.sh" | bash -s uninstall
     fi
