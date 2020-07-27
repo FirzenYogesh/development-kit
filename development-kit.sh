@@ -30,8 +30,7 @@ installTool() {
         nvm install
         npm i -g typescript
     elif [[ $tool == "docker"]]; then
-        
-
+        sh -c "$curl -fsSL (https://raw.githubusercontent.com/FirzenYogesh/development-kit/master/docker-kit.sh)"
     fi
 }
 
