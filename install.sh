@@ -17,6 +17,8 @@ MAIN="$SHELL/main"
 SHELL_PATHS="$SHELL/paths"
 # ALIASES
 ALIASES="$SHELL/aliases"
+# env
+ENV_PATH="$SHELL/env"
 
 cd $WORKSPACE
 
@@ -42,13 +44,22 @@ else
 
     # Main 
     echo "source $SHELL_PATHS
-source $ALIASES" >> $MAIN
+source $ALIASES
+source $ENV_PATH" >> $MAIN
 
     # Setup Paths
     echo "export PATH=\"\$PATH:$KIT_PATH\"" >> $SHELL_PATHS
 
     # Setup Aliases
     echo 'alias cl="clear"' >> $ALIASES
+
+    # Setup env
+    echo "export DEVELOPMENT_KIT_HOME=$WORKSPACE
+export DEVELOPMENT_KIT_SDK_HOME=$WORKSPACE/sdk
+export DEVELOPMENT_KIT_ALIASES=$ALIASES
+export DEVELOPMENT_KIT_ENV=$ENV_PATH
+export DEVELOPMENT_KIT_PATHS=$SHELL_PATHS
+export DEVELOPMENT_KIT_MAIN=$MAIN"
 
     # Add to the shell
     echo "# Setup by development-kit
