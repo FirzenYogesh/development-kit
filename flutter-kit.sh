@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Set the mode for this script (install or remove)
 mkdir -p $DEVELOPMENT_KIT_SDK_HOME
 
+# Set the mode for this script (install or remove)
 MODE="install"
 
 if [[ -z "$1" ]]; then
