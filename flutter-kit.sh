@@ -16,6 +16,7 @@ fi
 if [[ $MODE == "install" ]]; then
     cd $DEVELOPMENT_KIT_SDK_HOME
     if ! command -v flutter &> /dev/null; then
+        # Pre-requisite
         if [[ "$OSTYPE" == "linux"* ]]; then
             sudo apt update
             sudo apt install -y unzip zip curl git xz-utils
@@ -25,7 +26,15 @@ if [[ $MODE == "install" ]]; then
                 sudo dnf -y install mesa-libGLU
             fi
         fi
-        git clone https://github.com/flutter/flutter.git -b stable --depth 1
+
+        if [[ "$OSTYPE" == "linux"* ]]; then
+            curl -O flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.5-stable.tar.xz
+            tar xvf flutter.tar.xz
+            rm xvf flutter.tar.xz
+        elif [[ "$OSTYPE" == "darwin"* ]]; then
+            git clone https://github.com/flutter/flutter.git -b stable --depth 1
+        fi
+
         if [[ -z "$FLUTTER_HOME" ]]; then
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
             echo 'export PATH="$PATH:$FLUTTER_HOME/bin"' >> $DEVELOPMENT_KIT_PATHS
