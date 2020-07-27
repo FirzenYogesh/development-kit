@@ -44,14 +44,13 @@ if [[ $MODE == "install" ]]; then
 
     source $DEVELOPMENT_KIT_MAIN
 
-    echo $ANDROID_HOME
-
     sdkmanager --sdk_root=${ANDROID_HOME} tools
     sdkmanager "platforms;android-29"
     sdkmanager "platform-tools"
     sdkmanager "patcher;v4"
-    sdkmanager "build-tools;29.0.2"
     sdkmanager "emulator"
+    sdkmanager "build-tools;29.0.2"
+    yes | sdkmanager --licenses
 else
     if [[ -d "$ANDROID_HOME" ]]; then
         rm -rf $ANDROID_HOME
