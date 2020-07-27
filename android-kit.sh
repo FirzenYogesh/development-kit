@@ -45,11 +45,11 @@ if [[ $MODE == "install" ]]; then
     source $DEVELOPMENT_KIT_MAIN
 
     sdkmanager --sdk_root=${ANDROID_HOME} tools
-    sdkmanager "platforms;android-29"
-    sdkmanager "platform-tools"
-    sdkmanager "patcher;v4"
-    sdkmanager "emulator"
-    sdkmanager "build-tools;29.0.2"
+    yes | sdkmanager "platforms;android-29"
+    yes | sdkmanager "platform-tools"
+    yes | sdkmanager "patcher;v4"
+    yes | sdkmanager "emulator"
+    yes | sdkmanager "build-tools;29.0.2"
     yes | sdkmanager --licenses
 else
     if [[ -d "$ANDROID_HOME" ]]; then
