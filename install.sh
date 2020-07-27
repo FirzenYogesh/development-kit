@@ -29,7 +29,7 @@ elif [[ -f "$HOME/.bash_profile" ]]; then
     SHELL_RC="$HOME/.bash_profile"
 fi
 
-if [[ -f "$KIT_PATH" ]]; then
+if [[ -d "$KIT_PATH" ]]; then
     cd $KIT_PATH
     git checkout .
     git checkout main
