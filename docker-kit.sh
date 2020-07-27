@@ -63,4 +63,14 @@ else
         echo "Docker is not installed"
         exit 1
     fi
+    if [[ $OS == "ubuntu"]]; then
+        sudo apt-get purge docker-ce docker-ce-cli containerd.io
+    elif [[ $OS == "debian"]]; then
+        sudo apt-get purge docker-ce docker-ce-cli containerd.io
+    elif [[ $OS == "fedora" ]]; then
+        sudo dnf remove docker-ce docker-ce-cli containerd.io
+    elif [[ $OS == "centos" ]]; then
+        sudo yum remove docker-ce docker-ce-cli containerd.io
+    fi
+    sudo rm -rf /var/lib/docker
 fi
