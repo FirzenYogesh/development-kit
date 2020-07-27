@@ -34,7 +34,8 @@ if [[ -e "$KIT_PATH" ]]; then
     git checkout .
     git checkout main
     git pull
-    source $SHELL_RC
+    echo "Please run the following command
+source $SHELL_RC"
 else
     git clone https://github.com/FirzenYogesh/development-kit.git
     # Setup
@@ -54,6 +55,6 @@ source $ALIASES" >> $MAIN
 # Check https://github.com/FirzenYogesh/development-kit to know more
 source $MAIN
 # End of development-kit Setup" >> "$SHELL_RC"
-
-    #source $SHELL_RC
+    echo "Please run the following command
+source $SHELL_RC"
 fi
