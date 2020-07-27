@@ -28,7 +28,7 @@ if [[ $MODE == "install" ]]; then
         fi
 
         if [[ "$OSTYPE" == "linux"* ]]; then
-            curl -O flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.5-stable.tar.xz
+            wget -O flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.5-stable.tar.xz
             tar xvf flutter.tar.xz
             rm xvf flutter.tar.xz
         elif [[ "$OSTYPE" == "darwin"* ]]; then
