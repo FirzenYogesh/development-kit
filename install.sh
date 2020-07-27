@@ -29,6 +29,8 @@ fi
 
 if [[ -e "$KIT_PATH" ]]; then
     cd $KIT_PATH
+    git checkout .
+    git checkout main
     git pull
     source $SHELL_RC
 else
