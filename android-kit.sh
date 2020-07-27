@@ -42,7 +42,7 @@ if [[ $MODE == "install" ]]; then
         echo 'export PATH="$ANDROID_SDK_ROOT:$PATH"' >> $DEVELOPMENT_KIT_PATHS
     fi
 
-    source $DEVELOPMENT_KIT_MAIN
+    source "$DEVELOPMENT_KIT_MAIN"
 
     yes | sdkmanager --sdk_root=${ANDROID_HOME} tools
     yes | sdkmanager "platforms;android-29"
