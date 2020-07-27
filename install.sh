@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 WORKSPACE="$HOME/.development-tools"
 mkdir -p $WORKSPACE
 

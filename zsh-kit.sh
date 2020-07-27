@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # Set the mode for this script (install or remove)
 MODE="install"
