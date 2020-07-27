@@ -7,3 +7,4 @@ if [[ -e "$WORKSPACE/development-kit" ]]; then
     git pull orign main
 else
     git clone https://github.com/FirzenYogesh/development-kit.git
+fi
