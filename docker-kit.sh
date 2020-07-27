@@ -41,22 +41,22 @@ if [[ $MODE == "install" ]]; then
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
         sudo apt update
-        sudo apt install docker-ce docker-ce-cli containerd.io
+        sudo apt install -y docker-ce docker-ce-cli containerd.io
     elif [[ $OS == "debian" ]]; then
         sudo apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
         curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
         sudo apt update
-        sudo apt install docker-ce docker-ce-cli containerd.io
+        sudo apt install -y docker-ce docker-ce-cli containerd.io
     elif [[ $OS == "fedora" ]]; then
         sudo dnf -y install dnf-plugins-core
         sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-        sudo dnf install docker-ce docker-ce-cli containerd.io
+        sudo dnf -y install docker-ce docker-ce-cli containerd.io
         sudo systemctl start docker
     elif [[ $OS == "centos" ]]; then
         sudo yum install -y yum-utils
         sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-        sudo yum install docker-ce docker-ce-cli containerd.io
+        sudo yum install -y docker-ce docker-ce-cli containerd.io
         sudo systemctl start docker
     fi
     sudo docker run hello-world
