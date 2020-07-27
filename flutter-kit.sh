@@ -25,10 +25,13 @@ if [[ $MODE == "install" ]]; then
                 sudo dnf -y install mesa-libGLU
             fi
         fi
-        git clone https://github.com/flutter/flutter.git -b beta --depth 1
-        echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin"' >> $DEVELOPMENT_KIT_PATHS
-        echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin/cache/dart-sdk/bin"' >> $DEVELOPMENT_KIT_PATHS
-        echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/.pub-cache/bin"' >> $DEVELOPMENT_KIT_PATHS
+        git clone https://github.com/flutter/flutter.git -b stable --depth 1
+        echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter'
+        if [[ ! -d "$DEVELOPMENT_KIT_SDK_HOME/flutter" ]]; then
+            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin"' >> $DEVELOPMENT_KIT_PATHS
+            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin/cache/dart-sdk/bin"' >> $DEVELOPMENT_KIT_PATHS
+            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/.pub-cache/bin"' >> $DEVELOPMENT_KIT_PATHS
+        fi
         source $DEVELOPMENT_KIT_MAIN
         flutter precache
     else
