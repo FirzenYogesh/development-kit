@@ -25,7 +25,7 @@ if [[ $MODE == "install" ]]; then
                 sudo dnf -y install mesa-libGLU
             fi
         fi
-        git clone https://github.com/flutter/flutter.git -b stable --depth 1
+        git clone https://github.com/flutter/flutter.git -b beta --depth 1
         if [[ -z "$FLUTTER_HOME" ]]; then
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
             echo 'export PATH="$PATH:$FLUTTER_HOME/flutter/bin"' >> $DEVELOPMENT_KIT_PATHS
