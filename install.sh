@@ -21,15 +21,15 @@ ALIASES="$SHELL/aliases"
 cd $WORKSPACE
 
 SHELL_RC="$HOME/.bashrc"
-if [[ -e "$HOME/.zshrc" ]]; then
+if [[ -f "$HOME/.zshrc" ]]; then
     SHELL_RC="$HOME/.zshrc"
-elif [[ -e "$HOME/.profile" ]]; then
+elif [[ -f "$HOME/.profile" ]]; then
     SHELL_RC="$HOME/.profile"
-elif [[ -e "$HOME/.bash_profile" ]]; then
+elif [[ -f "$HOME/.bash_profile" ]]; then
     SHELL_RC="$HOME/.bash_profile"
 fi
 
-if [[ -e "$KIT_PATH" ]]; then
+if [[ -f "$KIT_PATH" ]]; then
     cd $KIT_PATH
     git checkout .
     git checkout main
