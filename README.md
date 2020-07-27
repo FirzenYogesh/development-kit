@@ -10,4 +10,4 @@ Well that's why!
 
 This repo is aims to be a one stop for all your major development tools/dependencies!
 
-PS: All the script here assumes you want a stable build.
+PS: All the script here assumes you want a stable build of the tools available.
