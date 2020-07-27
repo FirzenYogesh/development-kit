@@ -27,7 +27,6 @@ if [[ $MODE == "install" ]]; then
     nvm install --lts
     nvm install --latest-npm
     npm i -g typescript
-
 else
     if [[ -e $NVM_DIR ]]; then
         rm -rf "$NVM_DIR"
