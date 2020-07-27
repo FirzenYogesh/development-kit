@@ -23,10 +23,10 @@ code-server
 installTool() {
     local tool=$1
     echo "Installing $tool"
-    if [[ -e "$tool-kit" ]]; then
+    if [[ -e "$tool-kit.sh" ]]; then
         sh -c "$tool-kit.sh"
     else
-        sh -c "$curl -fsSL (https://raw.githubusercontent.com/FirzenYogesh/development-kit/master/$tool-kit.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/FirzenYogesh/development-kit/master/$tool-kit.sh)"
     fi
 }
 
