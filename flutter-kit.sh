@@ -27,11 +27,10 @@ if [[ $MODE == "install" ]]; then
         fi
         git clone https://github.com/flutter/flutter.git -b stable --depth 1
         echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin"' >> $DEVELOPMENT_KIT_PATHS
-        source $DEVELOPMENT_KIT_MAIN
-        flutter precache
         echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin/cache/dart-sdk/bin"' >> $DEVELOPMENT_KIT_PATHS
         echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/.pub-cache/bin"' >> $DEVELOPMENT_KIT_PATHS
         source $DEVELOPMENT_KIT_MAIN
+        flutter precache
     else
         flutter upgrade
     fi
