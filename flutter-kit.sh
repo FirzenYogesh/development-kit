@@ -30,7 +30,7 @@ if [[ $MODE == "install" ]]; then
         if [[ "$OSTYPE" == "linux"* ]]; then
             wget -O flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.5-stable.tar.xz
             tar xvf flutter.tar.xz
-            rm xvf flutter.tar.xz
+            rm flutter.tar.xz
         elif [[ "$OSTYPE" == "darwin"* ]]; then
             git clone https://github.com/flutter/flutter.git -b stable --depth 1
         fi
