@@ -23,11 +23,9 @@ code-server
 installTool() {
     local tool=$1
     echo "Installing $tool"
-    if [[ -e "$tool-kit.sh" ]]; then
-        sh -c "$tool-kit.sh"
-    else
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/FirzenYogesh/development-kit/master/$tool-kit.sh)"
-    fi
+    if[[ $tool == "development-kit" ]]; then
+    sh -c "install.sh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/FirzenYogesh/development-kit/master/$tool-kit.sh)"
 }
 
 if [[ $1 == "install" ]]; then

@@ -4,8 +4,10 @@
 MODE="install"
 
 if [[ -z "$1" ]]; then
-    if [ $1 == "uninstall" || $1 == "remove" || $1 == "purge" ]; then
-        MODE="uninstall";
+    MODE="install"
+else
+    if [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
+        MODE="uninstall"
     fi
 fi
 
@@ -29,7 +31,7 @@ elif [[ -e /etc/arch-release ]]; then
     exit 1
 fi
 
-if [[$MODE == "install"]]; then
+if [[ $MODE == "install" ]]; then
     if  command -v docker &> /dev/null; then
         echo "Docker is already installed"
         exit 1
