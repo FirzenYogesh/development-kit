@@ -44,7 +44,7 @@ if [[ $MODE == "install" ]]; then
 
     source $DEVELOPMENT_KIT_MAIN
 
-    sdkmanager --sdk_root=${ANDROID_HOME} tools
+    yes | sdkmanager --sdk_root=${ANDROID_HOME} tools
     yes | sdkmanager "platforms;android-29"
     yes | sdkmanager "platform-tools"
     yes | sdkmanager "patcher;v4"
