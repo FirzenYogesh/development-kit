@@ -48,7 +48,7 @@ source $ALIASES" >> $MAIN
     echo "export PATH=\"\$PATH:$KIT_PATH\"" >> $SHELL_PATHS
 
     # Setup Aliases
-    echo "cl=clear" >> $ALIASES
+    echo 'alias cl="clear"' >> $ALIASES
 
     # Add to the shell
     echo "# Setup by development-kit
