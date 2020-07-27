@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Set the mode for this script (install or remove)
 MODE="install"
 
 if [[ -z "$1" ]]; then
