@@ -17,13 +17,19 @@ PS: All the script here assumes you want a stable build of the tools available.
 To get started please run this command
 
 ```
-$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/install.sh)"
+curl -o- https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/install.sh | bash
+```
+
+or
+
+```
+wget -qO- https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/install.sh | bash
 ```
 
 Once it is installed, you can install your favorite dependency by executing this command
 
 ```
-$ development-kit install TOOL_NAME
+development-kit install TOOL_NAME
 ```
 
 Where `TOOL_NAME` is the tool/dependency you want to install
@@ -31,7 +37,7 @@ Where `TOOL_NAME` is the tool/dependency you want to install
 examples
 
 ```
-$ development-kit install zsh
-$ development-kit install nvm
-$ development-kit install docker
+development-kit install zsh
+development-kit install nvm
+development-kit install docker
 ```
