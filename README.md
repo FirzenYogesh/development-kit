@@ -8,6 +8,6 @@ Ever felt the frustration of installing and setting up a server or your workstat
 
 Well that's why!
 
-This repo is aims to be a one stop for all your major dependencies!
+This repo is aims to be a one stop for all your major development tools/dependencies!
 
 PS: All the script here assumes you want a stable build.
