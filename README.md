@@ -17,7 +17,7 @@ PS: All the script here assumes you want a stable build of the tools available.
 To get started please run this command
 
 ```
-$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/FirzenYogesh/development-kit/master/install.sh)"
+$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/install.sh)"
 ```
 
 Once it is installed, you can install your favorite dependency by executing this command
