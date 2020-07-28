@@ -14,28 +14,25 @@ code-server
     installTool $tool
 }
 
-installTool() {
-    local tool=$1
-    echo "Installing $tool"
+executeTask() {
+    local mode=$1
+    local tool=$2
+    echo "Executing $tool $mode"
     if [[ $tool == "development-kit" ]]; then
-        "install.sh" | bash
+        executeOnSelf $mode
     else
-        curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash
+        curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash -s $mode
     fi
 }
 
-uninstallTool() {
-    local tool=$1
-    echo "Uninstalling $tool"
-    if [[ $tool == "development-kit" ]]; then
+executeOnSelf() {
+    if [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
         rm -rf $HOME/.development-tools/development-kit
     else
-        curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash -s uninstall
+        curl -o- https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/install.sh | bash
     fi
 }
 
-if [[ $1 == "install" ]]; then
-    installTool $2
-elif [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
-    uninstallTool $2
+if [[ $1 == "install" ]] || [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
+    executeTask $1 $2
 fi
