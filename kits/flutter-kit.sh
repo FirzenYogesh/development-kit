@@ -46,6 +46,12 @@ if [[ $MODE == "install" ]]; then
     else
         flutter upgrade
     fi
+    flutter comfig --no-analytics
+    flutter config --enable-web
+    flutter config --enable-macos-desktop
+    flutter config --enable-linux-desktop
+    flutter comfig --enable-windows-desktop
+    flutter config --enable-android-embedding-v2
     flutter doctor
 else
     if ! command -v flutter &> /dev/null; then
