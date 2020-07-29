@@ -27,7 +27,7 @@ if [[ $MODE == "install" ]]; then
             fi
         fi
 
-        git clone https://github.com/flutter/flutter.git -b stable --depth 1
+        git clone https://github.com/flutter/flutter.git -b stable
 
         if [[ -z "$FLUTTER_HOME" ]]; then
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
