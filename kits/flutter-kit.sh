@@ -55,7 +55,7 @@ elif [[ $MODE == "switch" ]]; then
     fi
 elif [[ $MODE == "fix-env" ]]; then
     setEnv
-else
+elif [[ $MODE == "uninstall" ]]; then
     if ! command -v flutter &> /dev/null; then
         echo "Flutter is not installed"
     else
@@ -77,4 +77,7 @@ else
             echo "Please remove the PATH related to $CURRENT_FLUTTER_PATH"
         fi
     fi
+else
+    echo "Unsupported Operation"
+    exit 1
 fi
