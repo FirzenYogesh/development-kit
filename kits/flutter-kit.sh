@@ -34,7 +34,7 @@ if [[ $MODE == "install" ]]; then
             echo 'export PATH="$FLUTTER_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
             #! To be removed once v1.19 is released in stable
             echo 'export PATH="$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
-            echo 'export PATH="$FLUTTER_HOME/.pub-cache/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+            echo 'export PATH="$HOME/.pub-cache/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
         fi
         source "$DEVELOPMENT_KIT_MAIN"
         flutter precache
