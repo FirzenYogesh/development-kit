@@ -17,11 +17,11 @@ code-server
 executeTask() {
     local mode=$1
     local tool=$2
-    echo "Executing $tool $mode"
+    echo "Executing $tool-kit $mode $3"
     if [[ $tool == "development-kit" ]]; then
-        executeOnSelf $mode
+        executeOnSelf $mode $3
     else
-        curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash -s $mode
+        curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash -s $mode $3
     fi
 }
 
@@ -33,6 +33,4 @@ executeOnSelf() {
     fi
 }
 
-if [[ $1 == "install" ]] || [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
-    executeTask $1 $2
-fi
+executeTask $1 $2 $3

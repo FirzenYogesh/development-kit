@@ -2,22 +2,24 @@
 
 mkdir -p $DEVELOPMENT_KIT_SDK_HOME
 
-# Set the mode for this script (install or remove)
-MODE="install"
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
+OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)
 
-if [[ -z "$1" ]]; then
-    MODE="install"
-else
-    if [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
-        MODE="uninstall"
+setEnv() {
+    if [[ -z "$FLUTTER_HOME" ]]; then
+        echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
+        echo 'export PATH="$FLUTTER_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+        #! To be removed once v1.19 is released in stable
+        echo 'export PATH="$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+        echo 'export PATH="$HOME/.pub-cache/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
     fi
-fi
+}
 
 if [[ $MODE == "install" ]]; then
     cd $DEVELOPMENT_KIT_SDK_HOME
     if ! command -v flutter &> /dev/null; then
         # Pre-requisite
-        if [[ "$OSTYPE" == "linux"* ]]; then
+        if [[ "$OS" == "linux"* ]]; then
             sudo apt update
             sudo apt install -y unzip zip curl git xz-utils
             if [[ -e /etc/debian_version ]]; then
@@ -29,13 +31,8 @@ if [[ $MODE == "install" ]]; then
 
         git clone https://github.com/flutter/flutter.git -b stable
 
-        if [[ -z "$FLUTTER_HOME" ]]; then
-            echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
-            echo 'export PATH="$FLUTTER_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
-            #! To be removed once v1.19 is released in stable
-            echo 'export PATH="$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
-            echo 'export PATH="$HOME/.pub-cache/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
-        fi
+        setEnv
+
         source "$DEVELOPMENT_KIT_MAIN"
         flutter precache
     else
@@ -48,7 +45,17 @@ if [[ $MODE == "install" ]]; then
     flutter config --enable-windows-desktop
     flutter config --enable-android-embedding-v2
     flutter doctor
-else
+elif [[ $MODE == "switch" ]]; then
+    if [[ $2 == "master" ]] || [[ $2 == "dev" ]] || [[ $2 == "beta" ]] || [[ $2 == "stable" ]]; then
+        flutter channel $2
+        flutter upgrade
+    else
+        echo "Unsupported operation (should be one of master, dev, beta, stable)"
+        exit 1
+    fi
+elif [[ $MODE == "fix-env" ]]; then
+    setEnv
+elif [[ $MODE == "uninstall" ]]; then
     if ! command -v flutter &> /dev/null; then
         echo "Flutter is not installed"
     else

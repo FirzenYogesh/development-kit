@@ -3,20 +3,8 @@
 JAVA_HOME_PARENT="$DEVELOPMENT_KIT_SDK_HOME/java"
 mkdir -p $JAVA_HOME_PARENT
 
-TASK_MODE_SHELL_SCRIPT="$DEVELOPMENT_KIT_HOME/development-kit/commons/task-mode.sh"
-GET_OS_SHELL_SCRIPT="$DEVELOPMENT_KIT_HOME/development-kit/commons/get-os.sh"
-
-if [[ -f "$TASK_MODE_SHELL_SCRIPT" ]]; then
-    MODE=$(bash "$TASK_MODE_SHELL_SCRIPT" $1)
-else
-    MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
-fi
-
-if [[ -f "$GET_OS_SHELL_SCRIPT" ]]; then
-    OS=$(bash "$GET_OS_SHELL_SCRIPT")
-else
-    OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)
-fi
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
+OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)
 
 # get the appropriate jdk link
 getJDKLink() {

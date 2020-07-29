@@ -1,15 +1,6 @@
 #!/usr/bin/env zsh
 
-# Set the mode for this script (install or remove)
-MODE="install"
-
-if [[ -z "$1" ]]; then
-    MODE="install"
-else
-    if [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
-        MODE="uninstall"
-    fi
-fi
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
 
 if [[ -e $ZSH ]]; then
     source $HOME/.zshrc
@@ -21,7 +12,7 @@ if [[ $MODE == "install" ]]; then
     else
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
-else
+elif [[ $MODE == "uninstall" ]]; then
     if [[ -e $ZSH ]]; then
         uninstall_oh_my_zsh
     else
