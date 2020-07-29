@@ -74,7 +74,4 @@ elif [[ $MODE == "uninstall" ]]; then
     else
         echo "Android SDK is not installed"
     fi
-else
-    echo "Unsupported Operation"
-    exit 1
 fi

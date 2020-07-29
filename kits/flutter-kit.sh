@@ -77,7 +77,4 @@ elif [[ $MODE == "uninstall" ]]; then
             echo "Please remove the PATH related to $CURRENT_FLUTTER_PATH"
         fi
     fi
-else
-    echo "Unsupported Operation"
-    exit 1
 fi

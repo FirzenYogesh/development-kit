@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
 
-# Set the mode for this script (install or remove)
-MODE="install"
-
-if [[ -z "$1" ]]; then
-    MODE="install"
-else
-    if [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
-        MODE="uninstall"
-    fi
-fi
-
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
+OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os-type.sh" | bash)
 # Check OS Version
 
 # Debian or Ubuntu
@@ -60,7 +51,7 @@ if [[ $MODE == "install" ]]; then
         sudo systemctl start docker
     fi
     sudo docker run hello-world
-else
+elif [[ $MODE == "uninstall" ]]; then
     if ! command -v docker &> /dev/null; then
         echo "Docker is not installed"
         exit 1
@@ -74,5 +65,5 @@ else
     elif [[ $OS == "centos" ]]; then
         sudo yum remove -y docker-ce docker-ce-cli containerd.io
     fi
-    sudo rm -rf /var/lib/docker
+    sudo rm -rf /var/lib/docker  
 fi

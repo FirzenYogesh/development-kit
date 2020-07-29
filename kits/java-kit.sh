@@ -70,7 +70,3 @@ elif [[ $MODE == "switch" ]]; then
 elif [[ $MODE == "fix-env" ]]; then
     setEnv
 fi
-else
-    echo "Unsupported Operation"
-    exit 1
-fi

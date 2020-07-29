@@ -11,6 +11,9 @@ elif [[ $1 == "switch" ]] || [[ $1 == "alter" ]] || [[ $1 == "change" ]]; then
     MODE="switch"
 elif [[ $1 == "fix-env" ]]; then
     MODE="fix-env"
+else
+    echo "Unsupported Operation"
+    exit 1
 fi
 
 echo $MODE
