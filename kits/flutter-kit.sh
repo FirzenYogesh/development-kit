@@ -54,9 +54,9 @@ else
         if [[ -d "$DEVELOPMENT_KIT_SDK_HOME/flutter" ]]; then
             rm -rf $DEVELOPMENT_KIT_SDK_HOME/flutter
             echo "Please remove the lines below in $DEVELOPMENT_KIT_PATHS"
-            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin"'
-            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin/cache/dart-sdk/bin"'
-            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/.pub-cache/bin"'
+            echo 'export PATH="$PATH:$FLUTTER_HOME/bin"'
+            echo 'export PATH="$PATH:$FLUTTER_HOME/bin/cache/dart-sdk/bin"'
+            echo 'export PATH="$PATH:$FLUTTER_HOME/.pub-cache/bin"'
 
             echo "Please remove the lines below in $DEVELOPMENT_KIT_ENV"
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter'
