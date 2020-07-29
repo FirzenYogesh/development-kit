@@ -27,13 +27,7 @@ if [[ $MODE == "install" ]]; then
             fi
         fi
 
-        if [[ "$OSTYPE" == "linux"* ]]; then
-            wget -O flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.5-stable.tar.xz
-            tar xvf flutter.tar.xz
-            rm flutter.tar.xz
-        elif [[ "$OSTYPE" == "darwin"* ]]; then
-            git clone https://github.com/flutter/flutter.git -b stable --depth 1
-        fi
+        git clone https://github.com/flutter/flutter.git -b stable --depth 1
 
         if [[ -z "$FLUTTER_HOME" ]]; then
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
@@ -63,6 +57,9 @@ else
             echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin"'
             echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin/cache/dart-sdk/bin"'
             echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/.pub-cache/bin"'
+
+            echo "Please remove the lines below in $DEVELOPMENT_KIT_ENV"
+            echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter'
         else
             TEMP_PATH=$(command -v flutter)
             cd $TEMP_PATH &> /dev/null || cd `dirname $TEMP_PATH`
