@@ -57,6 +57,11 @@ switchVersion() {
     ln -sfn "$JAVA_HOME_PARENT/$JAVA_FOLDER" "$JAVA_HOME_PARENT/current"
 }
 
+setEnv() {
+    echo 'export JAVA_HOME="$DEVELOPMENT_KIT_SDK_HOME/java/current"' >> $DEVELOPMENT_KIT_ENV
+    echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+}
+
 cd "$JAVA_HOME_PARENT"
 
 if [[ $MODE == "install" ]]; then
@@ -66,12 +71,14 @@ if [[ $MODE == "install" ]]; then
     tar zxf "$JAVA_FOLDER.tar.gz" -C "$JAVA_FOLDER" --strip-components 1
     rm "$JAVA_FOLDER.tar.gz"
     switchVersion
+    if [[ -z "$JAVA_HOME" ]]; then
+        setEnv
+    fi
 elif [[ $MODE == "uninstall" ]]; then
     rm -rf $JAVA_FOLDER
     echo "Please switch the java version if needed"
 elif [[ $MODE == "switch" ]]; then
     switchVersion
 elif [[ $MODE == "fix-env" ]]; then
-    echo 'export JAVA_HOME="$DEVELOPMENT_KIT_SDK_HOME/java/current"' >> $DEVELOPMENT_KIT_ENV
-    echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+    setEnv
 fi
