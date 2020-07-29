@@ -16,7 +16,7 @@ fi
 if [[ -f "$GET_OS_SHELL_SCRIPT" ]]; then
     OS=$(bash "$GET_OS_SHELL_SCRIPT")
 else
-    OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash -s $1)
+    OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)
 fi
 
 # get the appropriate jdk link
