@@ -44,17 +44,35 @@ if [[ $MODE == "install" ]]; then
 
     source "$DEVELOPMENT_KIT_MAIN"
 
+    mkdir -p ~/.android
+    touch ~/.android/repositories.cfg
+
     yes | sdkmanager --sdk_root=${ANDROID_HOME} tools
-    yes | sdkmanager "platforms;android-29"
+    yes | sdkmanager "platforms;android-29" 
+    yes | sdkmanager "platforms;android-30"
     yes | sdkmanager "platform-tools"
+    yes | sdkmanager "cmdline-tools;latest"
     yes | sdkmanager "patcher;v4"
     yes | sdkmanager "emulator"
-    yes | sdkmanager "build-tools;29.0.2"
+    yes | sdkmanager "build-tools;30.0.1"
+    yes | sdkmanager "extras;android;m2repository"
+    yes | sdkmanager "extras;google;auto"
+    yes | sdkmanager "extras;google;google_play_services"
+    yes | sdkmanager "extras;google;instantapps"
+    yes | sdkmanager "extras;google;market_licensing"
     yes | sdkmanager --licenses
 else
     if [[ -d "$ANDROID_HOME" ]]; then
         rm -rf $ANDROID_HOME
-        echo "Please remove the PATH related to $ANDROID_HOME"
+        echo "Please remove the following lines in $DEVELOPMENT_KIT_ENV"
+        echo 'export ANDROID_HOME="$DEVELOPMENT_KIT_SDK_HOME/Android"'
+        echo 'export ANDROID_SDK_ROOT="$DEVELOPMENT_KIT_SDK_HOME/Android"'
+
+        echo "Please remove the following lines in $DEVELOPMENT_KIT_PATHS"
+        echo 'export PATH="$ANDROID_HOME/tools:$PATH"'
+        echo 'export PATH="$ANDROID_HOME/tools/bin:$PATH"'
+        echo 'export PATH="$ANDROID_HOME/platform-tools:$PATH"'
+        echo 'export PATH="$ANDROID_SDK_ROOT:$PATH"'
     else
         echo "Android SDK is not installed"
     fi

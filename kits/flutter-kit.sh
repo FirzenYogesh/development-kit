@@ -31,9 +31,10 @@ if [[ $MODE == "install" ]]; then
 
         if [[ -z "$FLUTTER_HOME" ]]; then
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
-            echo 'export PATH="$PATH:$FLUTTER_HOME/bin"' >> $DEVELOPMENT_KIT_PATHS
-            echo 'export PATH="$PATH:$FLUTTER_HOME/bin/cache/dart-sdk/bin"' >> $DEVELOPMENT_KIT_PATHS
-            echo 'export PATH="$PATH:$FLUTTER_HOME/.pub-cache/bin"' >> $DEVELOPMENT_KIT_PATHS
+            echo 'export PATH="$FLUTTER_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+            #! To be removed once v1.19 is released in stable
+            echo 'export PATH="$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+            echo 'export PATH="$HOME/.pub-cache/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
         fi
         source "$DEVELOPMENT_KIT_MAIN"
         flutter precache
@@ -54,9 +55,9 @@ else
         if [[ -d "$DEVELOPMENT_KIT_SDK_HOME/flutter" ]]; then
             rm -rf $DEVELOPMENT_KIT_SDK_HOME/flutter
             echo "Please remove the lines below in $DEVELOPMENT_KIT_PATHS"
-            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin"'
-            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/bin/cache/dart-sdk/bin"'
-            echo 'export PATH="$PATH:$DEVELOPMENT_KIT_SDK_HOME/flutter/.pub-cache/bin"'
+            echo 'export PATH="$PATH:$FLUTTER_HOME/bin"'
+            echo 'export PATH="$PATH:$FLUTTER_HOME/bin/cache/dart-sdk/bin"'
+            echo 'export PATH="$PATH:$FLUTTER_HOME/.pub-cache/bin"'
 
             echo "Please remove the lines below in $DEVELOPMENT_KIT_ENV"
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter'

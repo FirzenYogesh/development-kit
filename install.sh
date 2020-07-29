@@ -43,9 +43,9 @@ else
     # Setup
 
     # Main 
-    echo "source $SHELL_PATHS
-source $ALIASES
-source $ENV_PATH" >> $MAIN
+    echo "source $ENV_PATH
+source $SHELL_PATHS
+source $ALIASES" >> $MAIN
 
     # Setup Paths
     echo "export PATH=\"\$PATH:$KIT_PATH\"" >> $SHELL_PATHS
