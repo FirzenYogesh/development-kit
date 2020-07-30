@@ -9,17 +9,17 @@ KIT_PATH="$WORKSPACE/development-kit"
 DEPENDENCIES="$WORKSPACE/.dependencies"
 mkdir -p "$DEPENDENCIES"
 
-SHELL="$DEPENDENCIES/shell"
-mkdir -p "$SHELL"
+SHELL_DEPENDENCIES="$DEPENDENCIES/shell"
+mkdir -p "$SHELL_DEPENDENCIES"
 
 # Main Shell script resources
-MAIN="$SHELL/main"
+MAIN="$SHELL_DEPENDENCIES/main"
 # PATH variables
-SHELL_PATHS="$SHELL/paths"
+SHELL_PATHS="$SHELL_DEPENDENCIES/paths"
 # ALIASES
-ALIASES="$SHELL/aliases"
+ALIASES="$SHELL_DEPENDENCIES/aliases"
 # env
-ENV_PATH="$SHELL/env"
+ENV_PATH="$SHELL_DEPENDENCIES/env"
 
 cd "$WORKSPACE"
 
@@ -86,4 +86,5 @@ source $SHELL_RC"
 fi
 
 # auto reload current shell
+# shellcheck disable=SC2086,SC2015
 [[ -n "$SHELL" ]] && exec ${SHELL#-} || exec zsh
