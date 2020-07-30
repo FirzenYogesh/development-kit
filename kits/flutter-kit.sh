@@ -45,7 +45,7 @@ if [[ $MODE == "install" ]]; then
         setEnv
 
         # shellcheck disable=SC1090
-        # disabling this rule as it is not inconsistent variable
+        # disabling this rule as it is a constant variable
         source "$DEVELOPMENT_KIT_MAIN"
         flutter precache
     else
