@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2016
+# disabling this entirely in the current file 
+# because we need to maintain the string
 
 WORKSPACE="$DEVELOPMENT_KIT_SDK_HOME/Android"
 mkdir -p "$WORKSPACE"
