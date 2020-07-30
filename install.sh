@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2164
 
 WORKSPACE="$HOME/.development-tools"
-mkdir -p $WORKSPACE
+mkdir -p "$WORKSPACE"
 
 KIT_PATH="$WORKSPACE/development-kit"
 
 DEPENDENCIES="$WORKSPACE/.dependencies"
-mkdir -p $DEPENDENCIES
+mkdir -p "$DEPENDENCIES"
 
 SHELL="$DEPENDENCIES/shell"
-mkdir -p $SHELL
+mkdir -p "$SHELL"
 
 # Main Shell script resources
 MAIN="$SHELL/main"
@@ -20,7 +21,7 @@ ALIASES="$SHELL/aliases"
 # env
 ENV_PATH="$SHELL/env"
 
-cd $WORKSPACE
+cd "$WORKSPACE"
 
 SHELL_RC="$HOME/.bashrc"
 if [[ -f "$HOME/.zshrc" ]]; then
@@ -32,7 +33,7 @@ elif [[ -f "$HOME/.bash_profile" ]]; then
 fi
 
 if [[ -d "$KIT_PATH" ]]; then
-    cd $KIT_PATH
+    cd "$KIT_PATH"
     git checkout .
     git checkout main
     git pull
@@ -43,23 +44,35 @@ else
     # Setup
 
     # Main 
-    echo "source $ENV_PATH
+    {
+        echo "source $ENV_PATH
 source $SHELL_PATHS
-source $ALIASES" >> $MAIN
+source $ALIASES"
+     } >> "$MAIN"
 
     # Setup Paths
-    echo "export PATH=\"\$PATH:$KIT_PATH\"" >> $SHELL_PATHS
+    {
+        echo "export PATH=\"\$PATH:$KIT_PATH\""
+    } >> "$SHELL_PATHS"
 
     # Setup Aliases
-    echo 'alias cl="clear"' >> $ALIASES
+    {
+        echo 'alias cl="clear"'
+        echo 'alias gs="git status"'
+        echo 'alias gd="git diff"'
+        echo 'alias gc="git checkout"'
+        echo 'alias gpoh="git push origin HEAD"'
+    } >> "$ALIASES"
 
     # Setup env
-    echo "export DEVELOPMENT_KIT_HOME=$WORKSPACE
+    {
+        echo "export DEVELOPMENT_KIT_HOME=$WORKSPACE
 export DEVELOPMENT_KIT_SDK_HOME=$WORKSPACE/sdk
 export DEVELOPMENT_KIT_ALIASES=$ALIASES
 export DEVELOPMENT_KIT_ENV=$ENV_PATH
 export DEVELOPMENT_KIT_PATHS=$SHELL_PATHS
-export DEVELOPMENT_KIT_MAIN=$MAIN" >> $ENV_PATH
+export DEVELOPMENT_KIT_MAIN=$MAIN"
+    } >> "$ENV_PATH"
 
     # Add to the shell
     echo "# Setup by development-kit
