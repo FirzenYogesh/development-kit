@@ -66,6 +66,8 @@ if [[ $MODE == "install" ]]; then
     flutter config --enable-windows-desktop
     flutter config --enable-android-embedding-v2
     flutter doctor
+    flutter packages pub global activate devtools
+    flutter packages pub global activate webdev
 elif [[ $MODE == "switch" ]]; then
     flutter channel "$CHANNEL"
     flutter upgrade
