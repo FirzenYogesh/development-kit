@@ -84,3 +84,6 @@ source $MAIN
     echo "Please run the following command
 source $SHELL_RC"
 fi
+
+# auto reload current shell
+[[ -n "$SHELL" ]] && exec ${SHELL#-} || exec zsh

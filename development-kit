@@ -34,3 +34,6 @@ executeOnSelf() {
 }
 
 executeTask "$1" "$2" "$3"
+
+# auto reload current shell
+[[ -n "$SHELL" ]] && exec ${SHELL#-} || exec zsh
