@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 
-MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
 
 if [[ -e $ZSH ]]; then
-    source $HOME/.zshrc
+    source "$HOME/.zshrc"
 fi
 
 if [[ $MODE == "install" ]]; then
