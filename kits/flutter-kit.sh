@@ -6,8 +6,7 @@
 mkdir -p "$DEVELOPMENT_KIT_SDK_HOME"
 
 MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
-OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)
-OS_VARIENT=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os-type.sh" | bash)
+eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
 
 setEnv() {
     if [[ -z "$FLUTTER_HOME" ]]; then
