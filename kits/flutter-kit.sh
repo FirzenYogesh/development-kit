@@ -23,8 +23,9 @@ setEnv() {
     fi
 }
 
-CHANNEL="stable"
-if [[ $2 == "master" ]] || [[ $2 == "dev" ]] || [[ $2 == "beta" ]] || [[ $2 == "stable" ]]; then
+if [[ -z "$2" ]]; then
+    CHANNEL="stable"
+elif [[ $2 == "master" ]] || [[ $2 == "dev" ]] || [[ $2 == "beta" ]] || [[ $2 == "stable" ]]; then
     CHANNEL="$2"
 else
     echo "Unsupported operation (should be one of master, dev, beta, stable)"
