@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2164
+# shellcheck disable=SC2164,SC2016
 
 WORKSPACE="$HOME/.development-tools"
 mkdir -p "$WORKSPACE"
@@ -52,9 +52,7 @@ source $ALIASES"
 
     # Setup Paths
     {
-        # shellcheck disable=SC2016
-        echo 'export PATH="$PATH":"$DEVELOPMENT_KIT_HOME"'
-        # shellcheck disable=SC2016
+        echo 'export PATH="$PATH":"$DEVELOPMENT_KIT_HOME/development-kit"'
         echo 'export PATH="$PATH":"$DEVELOPMENT_KIT_SDK_EXECUTABLES"'
     } >> "$SHELL_PATHS"
 
