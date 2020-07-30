@@ -23,6 +23,14 @@ setEnv() {
     fi
 }
 
+CHANNEL="stable"
+if [[ $2 == "master" ]] || [[ $2 == "dev" ]] || [[ $2 == "beta" ]] || [[ $2 == "stable" ]]; then
+    CHANNEL="$2"
+else
+    echo "Unsupported operation (should be one of master, dev, beta, stable)"
+    exit 1
+fi
+
 if [[ $MODE == "install" ]]; then
     # shellcheck disable=SC2164
     # Disabling this rule because we know the directory exists
@@ -39,7 +47,7 @@ if [[ $MODE == "install" ]]; then
             fi
         fi
 
-        git clone https://github.com/flutter/flutter.git -b stable
+        git clone https://github.com/flutter/flutter.git -b "$CHANNEL"
 
         setEnv
 
@@ -58,13 +66,8 @@ if [[ $MODE == "install" ]]; then
     flutter config --enable-android-embedding-v2
     flutter doctor
 elif [[ $MODE == "switch" ]]; then
-    if [[ $2 == "master" ]] || [[ $2 == "dev" ]] || [[ $2 == "beta" ]] || [[ $2 == "stable" ]]; then
-        flutter channel "$2"
-        flutter upgrade
-    else
-        echo "Unsupported operation (should be one of master, dev, beta, stable)"
-        exit 1
-    fi
+    flutter channel "$CHANNEL"
+    flutter upgrade
 elif [[ $MODE == "fix-env" ]]; then
     setEnv
 elif [[ $MODE == "uninstall" ]]; then
