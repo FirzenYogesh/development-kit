@@ -1,23 +1,9 @@
 #!/usr/bin/env bash
 
-MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
 OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os-type.sh" | bash)
-# Check OS Version
 
-# Debian or Ubuntu
-if [[ -e /etc/debian_version ]]; then
-    source /etc/os-release
-    OS=$ID
-elif [[ -e /etc/fedora-release ]]; then
-    source /etc/os-release
-	OS=$ID
-elif [[ -e /etc/fedora-release ]]; then
-	source /etc/os-release
-	OS=$ID
-elif [[ -e /etc/centos-release ]]; then
-	OS=centos
-elif [[ -e /etc/arch-release ]]; then
-	OS=arch
+if [[ $OS == "arch" ]]; then
     echo "Currently the script does not support Arch Linux"
     exit 1
 fi

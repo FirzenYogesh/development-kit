@@ -1,30 +1,41 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
+# disabling this entirely in the current file 
+# because we need to maintain the string
 
-mkdir -p $DEVELOPMENT_KIT_SDK_HOME
+mkdir -p "$DEVELOPMENT_KIT_SDK_HOME"
 
-MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
 OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)
+OS_VARIENT=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os-type.sh" | bash)
 
 setEnv() {
     if [[ -z "$FLUTTER_HOME" ]]; then
-        echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter' >> $DEVELOPMENT_KIT_ENV
-        echo 'export PATH="$FLUTTER_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
-        #! To be removed once v1.19 is released in stable
-        echo 'export PATH="$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
-        echo 'export PATH="$HOME/.pub-cache/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+        {
+            echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter'
+        } >> "$DEVELOPMENT_KIT_ENV"
+        
+        {
+            echo 'export PATH="$FLUTTER_HOME/bin:$PATH"'
+            #! To be removed once v1.19 is released in stable
+            echo 'export PATH="$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH"'
+            echo 'export PATH="$HOME/.pub-cache/bin:$PATH"'
+        } >> "$DEVELOPMENT_KIT_PATHS"
     fi
 }
 
 if [[ $MODE == "install" ]]; then
-    cd $DEVELOPMENT_KIT_SDK_HOME
+    # shellcheck disable=SC2164
+    # Disabling this rule because we know the directory exists
+    cd "$DEVELOPMENT_KIT_SDK_HOME"
     if ! command -v flutter &> /dev/null; then
         # Pre-requisite
         if [[ "$OS" == "linux"* ]]; then
             sudo apt update
             sudo apt install -y unzip zip curl git xz-utils
-            if [[ -e /etc/debian_version ]]; then
+            if [[ $OS_VARIENT == "ubuntu" ]] || [[ $OS_VARIENT == "debian" ]]; then
                 sudo apt install -y libglu1-mesa
-            elif [[ -e /etc/fedora-release ]]; then
+            elif [[ $OS_VARIENT == "fedora" ]]; then
                 sudo dnf -y install mesa-libGLU
             fi
         fi
@@ -33,6 +44,8 @@ if [[ $MODE == "install" ]]; then
 
         setEnv
 
+        # shellcheck disable=SC1090
+        # disabling this rule as it is a constant variable
         source "$DEVELOPMENT_KIT_MAIN"
         flutter precache
     else
@@ -47,7 +60,7 @@ if [[ $MODE == "install" ]]; then
     flutter doctor
 elif [[ $MODE == "switch" ]]; then
     if [[ $2 == "master" ]] || [[ $2 == "dev" ]] || [[ $2 == "beta" ]] || [[ $2 == "stable" ]]; then
-        flutter channel $2
+        flutter channel "$2"
         flutter upgrade
     else
         echo "Unsupported operation (should be one of master, dev, beta, stable)"
@@ -60,7 +73,7 @@ elif [[ $MODE == "uninstall" ]]; then
         echo "Flutter is not installed"
     else
         if [[ -d "$DEVELOPMENT_KIT_SDK_HOME/flutter" ]]; then
-            rm -rf $DEVELOPMENT_KIT_SDK_HOME/flutter
+            rm -rf "$DEVELOPMENT_KIT_SDK_HOME/flutter"
             echo "Please remove the lines below in $DEVELOPMENT_KIT_PATHS"
             echo 'export PATH="$PATH:$FLUTTER_HOME/bin"'
             echo 'export PATH="$PATH:$FLUTTER_HOME/bin/cache/dart-sdk/bin"'
@@ -70,10 +83,10 @@ elif [[ $MODE == "uninstall" ]]; then
             echo 'export FLUTTER_HOME=$DEVELOPMENT_KIT_SDK_HOME/flutter'
         else
             TEMP_PATH=$(command -v flutter)
-            cd $TEMP_PATH &> /dev/null || cd `dirname $TEMP_PATH`
+            cd "$TEMP_PATH" &> /dev/null || cd "$(dirname "$TEMP_PATH")" || exit 1
             cd ..
             CURRENT_FLUTTER_PATH=$(pwd)
-            rm -rf $CURRENT_FLUTTER_PATH
+            rm -rf "$CURRENT_FLUTTER_PATH"
             echo "Please remove the PATH related to $CURRENT_FLUTTER_PATH"
         fi
     fi

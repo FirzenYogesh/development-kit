@@ -11,7 +11,7 @@ code-server
 
     local tool=""
     read -e -rp "Type ahead with your choice: " tool
-    installTool $tool
+    installTool "$tool"
 }
 
 executeTask() {
@@ -19,18 +19,18 @@ executeTask() {
     local tool=$2
     echo "Executing $tool-kit $mode $3"
     if [[ $tool == "development-kit" ]]; then
-        executeOnSelf $mode $3
+        executeOnSelf "$mode" "$3"
     else
-        curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash -s $mode $3
+        curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash -s "$mode" "$3"
     fi
 }
 
 executeOnSelf() {
     if [[ $1 == "uninstall" ]] || [[ $1 == "remove" ]] || [[ $1 == "purge" ]]; then
-        rm -rf $HOME/.development-tools/development-kit
+        rm -rf "$HOME/.development-tools/development-kit"
     else
         curl -o- https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/install.sh | bash
     fi
 }
 
-executeTask $1 $2 $3
+executeTask "$1" "$2" "$3"

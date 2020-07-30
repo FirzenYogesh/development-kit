@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
+# disabling this entirely in the current file 
+# because we need to maintain the string
 
 JAVA_HOME_PARENT="$DEVELOPMENT_KIT_SDK_HOME/java"
-mkdir -p $JAVA_HOME_PARENT
+mkdir -p "$JAVA_HOME_PARENT"
 
-MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s $1)
+MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
 OS=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)
 
 # get the appropriate jdk link
 getJDKLink() {
-    local version=$1
+    local version="$1"
     if [[ -z "$version" ]]; then
         version="jdk8"
     fi
@@ -29,13 +32,13 @@ getJDKLink() {
             link=https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u262-b10/OpenJDK8U-jdk_x64_mac_hotspot_8u262b10.tar.gz
         fi
     fi
-    echo $link
+    echo "$link"
 }
 
 if [[ -z "$2" ]]; then
     JAVA_FOLDER="jdk8"
 else
-    JAVA_FOLDER=$2
+    JAVA_FOLDER="$2"
     if [[ $2 =~ ^[0-9]+ ]]; then
         JAVA_FOLDER="jdk$2"
     fi
@@ -46,15 +49,21 @@ switchVersion() {
 }
 
 setEnv() {
-    echo 'export JAVA_HOME="$DEVELOPMENT_KIT_SDK_HOME/java/current"' >> $DEVELOPMENT_KIT_ENV
-    echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> $DEVELOPMENT_KIT_PATHS
+    {
+        echo 'export JAVA_HOME="$DEVELOPMENT_KIT_SDK_HOME/java/current"' 
+    } >> "$DEVELOPMENT_KIT_ENV"
+    {
+        echo 'export PATH="$JAVA_HOME/bin:$PATH"'
+    } >> "$DEVELOPMENT_KIT_PATHS"
 }
 
+# shellcheck disable=SC2164
+# Disabling this rule because we know the directory exists
 cd "$JAVA_HOME_PARENT"
 
 if [[ $MODE == "install" ]]; then
     mkdir -p "$JAVA_FOLDER"
-    link=$(getJDKLink $JAVA_FOLDER)
+    link="$(getJDKLink "$JAVA_FOLDER")"
     wget -O "$JAVA_FOLDER.tar.gz" "$link"
     tar zxf "$JAVA_FOLDER.tar.gz" -C "$JAVA_FOLDER" --strip-components 1
     rm "$JAVA_FOLDER.tar.gz"
@@ -63,7 +72,7 @@ if [[ $MODE == "install" ]]; then
         setEnv
     fi
 elif [[ $MODE == "uninstall" ]]; then
-    rm -rf $JAVA_FOLDER
+    rm -rf "$JAVA_FOLDER"
     echo "Please switch the java version if needed"
 elif [[ $MODE == "switch" ]]; then
     switchVersion
