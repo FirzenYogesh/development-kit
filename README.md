@@ -41,3 +41,5 @@ development-kit install zsh
 development-kit install nvm
 development-kit install docker
 ```
+
+Currently only MacOS and Linux is supported
