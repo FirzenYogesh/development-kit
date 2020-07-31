@@ -29,20 +29,46 @@ else
     exit 1
 fi
 
-# URL Should look like this
-# https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.0.tgz
-# https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-4.4.0.zip
-# https://fastdl.mongodb.org/osx/mongodb-macos-x86_64-4.4.0.tgz
-
-URL="$BASE_URL/$FIRST_PATH/mongodb-$OS-$OS_ARCHITECTURE$OS_SPECIFIC-$MONGO_VERSION.tgz"
-
-echo "Dowloading MongoDB from $URL"
-
 FOLDER_NAME="mongodb-$MONGO_VERSION"
 
-mkdir -p "$FOLDER_NAME"
+switchVersion() {
+    ln -sfn "$WORKSPACE/$FOLDER_NAME" "$WORKSPACE/current"
+}
 
-wget -O "$FOLDER_NAME.$FILE_EXTENSION" "$URL"
+setEnv() {
+    {
+        echo 'export MONGO_HOME="$DEVELOPMENT_KIT_DB_HOME/mongo/current"' 
+    } >> "$DEVELOPMENT_KIT_ENV"
+    {
+        echo 'export PATH="$PATH":"$MONGO_HOME/bin"'
+    } >> "$DEVELOPMENT_KIT_PATHS"
+}
 
-tar zxf "$FOLDER_NAME.$FILE_EXTENSION" -C "$FOLDER_NAME"
+if [[ $MODE == "install" ]]; then
+    # URL Should look like this
+    # https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.0.tgz
+    # https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-4.4.0.zip
+    # https://fastdl.mongodb.org/osx/mongodb-macos-x86_64-4.4.0.tgz
 
+    URL="$BASE_URL/$FIRST_PATH/mongodb-$OS-$OS_ARCHITECTURE$OS_SPECIFIC-$MONGO_VERSION.tgz"
+
+    echo "Dowloading MongoDB from $URL"
+
+    mkdir -p "$FOLDER_NAME"
+
+    wget -O "$FOLDER_NAME.$FILE_EXTENSION" "$URL"
+    
+    tar zxf "$FOLDER_NAME.$FILE_EXTENSION" -C "$FOLDER_NAME" --strip-components 1
+
+    switchVersion
+    if [[ -z "$MONGO_HOME" ]]; then
+        setEnv
+    fi
+elif [[ $MODE == "switch" ]]; then
+    switchVersion
+elif [[ $MODE == "uninstall" ]]; then
+    rm -rf "$FOLDER_NAME"
+    echo "Please switch the mongo version if needed"
+elif [[ $MODE == "fix-env" ]]; then
+    setEnv
+fi
