@@ -3,8 +3,6 @@
 # disabling this entirely in the current file 
 # because we need to maintain the string
 
-MODE=$(./commons/task-mode.sh "$1")
-eval $(./commons/get-os.sh)
 
 WORKSPACE="$DEVELOPMENT_KIT_DB_HOME/mongo"
 mkdir -p "$WORKSPACE" && cd "$_"
@@ -16,8 +14,15 @@ MONGO_LOG="$WORKSPACE/log"
 mkdir -p "$MONGO_DATA"
 mkdir -p "$MONGO_LOG"
 
-# MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
-# eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
+# run proper init scripts based on execution environment
+# DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
+if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
+    MODE=$(./commons/task-mode.sh "$1")
+    eval "$(./commons/get-os.sh)"
+else
+    MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
+    eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
+fi
 
 if [[ -z "$2" ]]; then
     MONGO_VERSION="4.4.0"
@@ -57,7 +62,7 @@ setEnv() {
 
 LOCAL_USER_SERVICE_FILE="$HOME/.config/systemd/user/default.target.wants/mongod.service"
 SERVICE_FILE="/usr/lib/systemd/user/mongod.service"
-mkdir -p $(dirname "$LOCAL_USER_SERVICE_FILE")
+mkdir -p "$(dirname "$LOCAL_USER_SERVICE_FILE")"
 
 if [[ $MODE == "install" ]]; then
     # URL Should look like this
@@ -78,6 +83,9 @@ if [[ $MODE == "install" ]]; then
     switchVersion
     if [[ -z "$MONGO_HOME" ]]; then
         setEnv
+
+        # shellcheck disable=SC1090
+        # disabling this rule as it is a constant variable
         source "$DEVELOPMENT_KIT_MAIN"
     fi
     rm "$FOLDER_NAME.$FILE_EXTENSION"
