@@ -1,9 +1,19 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
+# disabling this entirely in the current file 
+# because we need to maintain the string
 
-MODE=$(./commons/task-mode.sh)
+MODE=$(./commons/task-mode.sh $1)
 eval $(./commons/get-os.sh)
 WORKSPACE="$DEVELOPMENT_KIT_DB_HOME/mongo"
 mkdir -p "$WORKSPACE" && cd "$_"
+
+MONGO_CONF="$WORKSPACE/mongod.conf"
+MONGO_DATA="$WORKSPACE/data"
+MONGO_LOG="$WORKSPACE/log"
+
+mkdir -p "$MONGO_DATA"
+mkdir -p "$MONGO_LOG"
 
 # MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
 # eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
@@ -64,6 +74,38 @@ if [[ $MODE == "install" ]]; then
     if [[ -z "$MONGO_HOME" ]]; then
         setEnv
     fi
+    rm "$FOLDER_NAME.$FILE_EXTENSION"
+
+    if  [[ -f "$MONGO_CONF" ]]; then
+        echo "A mongo configuration already exists. Skipping the auto generation of config file"
+    else
+        echo "
+# Where and how to store data.
+storage:
+    dbPath: $MONGO_DATA
+    journal:
+        enabled: true
+
+# where to write logging data.
+systemLog:
+    destination: file
+    logAppend: true
+    path: $MONGO_LOG/mongod.log
+
+# network interfaces
+net:
+    port: 27017
+    bindIp: 127.0.0.1
+
+# how the process runs
+processManagement:
+    fork: true
+    timeZoneInfo: /usr/share/zoneinfo
+" >> "$MONGO_CONF"
+    fi
+
+    mongod --config $MONGO_CONF
+
 elif [[ $MODE == "switch" ]]; then
     switchVersion
 elif [[ $MODE == "uninstall" ]]; then
