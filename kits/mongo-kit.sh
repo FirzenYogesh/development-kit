@@ -153,7 +153,7 @@ WantedBy=default.target
 if [[ $OS == "linux" ]]; then
     SERVICE_FILE="/usr/lib/systemd/user/mongod.service"
 elif [[ $OS == "macos" ]]; then
-    SERVICE_FILE="~/Library/LaunchAgents/development-kit-mongodb.plist"
+    SERVICE_FILE="$HOME/Library/LaunchAgents/development-kit.mongodb.plist"
 fi
 
 if [[ $MODE == "install" ]]; then
