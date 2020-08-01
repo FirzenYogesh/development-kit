@@ -3,6 +3,16 @@
 # disabling this entirely in the current file 
 # because we need to maintain the string
 
+# run proper init scripts based on execution environment
+# DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
+if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
+    MODE=$(./commons/task-mode.sh "$1")
+    eval "$(./commons/get-os.sh)"
+else
+    MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
+    eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
+fi
+
 
 WORKSPACE="$DEVELOPMENT_KIT_DB_HOME/mongo"
 mkdir -p "$WORKSPACE" && cd "$_"
@@ -13,16 +23,6 @@ MONGO_LOG="$WORKSPACE/log"
 
 mkdir -p "$MONGO_DATA"
 mkdir -p "$MONGO_LOG"
-
-# run proper init scripts based on execution environment
-# DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
-if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
-    MODE=$(./commons/task-mode.sh "$1")
-    eval "$(./commons/get-os.sh)"
-else
-    MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
-    eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
-fi
 
 if [[ -z "$2" ]]; then
     MONGO_VERSION="4.4.0"

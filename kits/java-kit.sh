@@ -3,9 +3,6 @@
 # disabling this entirely in the current file 
 # because we need to maintain the string
 
-JAVA_HOME_PARENT="$DEVELOPMENT_KIT_SDK_HOME/java"
-mkdir -p "$JAVA_HOME_PARENT"
-
 # run proper init scripts based on execution environment
 # DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
 if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
@@ -15,6 +12,9 @@ else
     MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
     eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
 fi
+
+JAVA_HOME_PARENT="$DEVELOPMENT_KIT_SDK_HOME/java"
+mkdir -p "$JAVA_HOME_PARENT"
 
 if ! command -v jq &> /dev/null; then
     mkdir -p "$DEVELOPMENT_KIT_SDK_EXECUTABLES" && cd "$_"
