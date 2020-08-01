@@ -22,21 +22,11 @@ if [ -z "$OS" ]; then
     esac
 fi
 
-OS_VARIENT=""
 if [ $OS == "linux" ]; then
     source /etc/os-release
-    # if [[ -e /etc/debian_version ]]; then
-    #     OS_VARIENT=$ID
-    # elif [[ -e /etc/fedora-release ]]; then
-    #     OS_VARIENT=$ID
-    # elif [[ -e /etc/fedora-release ]]; then
-    #     OS_VARIENT=$ID
-    # elif [[ -e /etc/centos-release ]]; then
-    #     OS_VARIENT=centos
-    # elif [[ -e /etc/arch-release ]]; then
-    #     OS_VARIENT=arch
-    # fi
 fi
+
+# get the architecture of the OS
 OS_ARCHITECTURE=$(uname -m)
 
 echo "OS=$OS; OS_VARIENT=$ID; OS_VERSION=$VERSION_ID; OS_ARCHITECTURE=$OS_ARCHITECTURE"
