@@ -56,7 +56,7 @@ setEnv() {
         echo 'export MONGO_HOME="$DEVELOPMENT_KIT_DB_HOME/mongo/current"' 
     } >> "$DEVELOPMENT_KIT_ENV"
     {
-        echo 'export PATH="$PATH":"$MONGO_HOME/bin"'
+        echo 'export PATH="$MONGO_HOME/bin":"$PATH"'
     } >> "$DEVELOPMENT_KIT_PATHS"
 }
 
