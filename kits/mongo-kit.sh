@@ -145,6 +145,25 @@ EnvironmentFile=-$WORKSPACE/mongod.env
 ExecStart=$MONGO_HOME/bin/mongod --config $MONGO_CONF
 PIDFile=$WORKSPACE/mongod.pid
 
+# file size
+LimitFSIZE=infinity
+# cpu time
+LimitCPU=infinity
+# virtual memory size
+LimitAS=infinity
+# open files
+LimitNOFILE=64000
+# processes/threads
+LimitNPROC=64000
+# locked memory
+LimitMEMLOCK=infinity
+# total threads (user+kernel)
+TasksMax=infinity
+TasksAccounting=false
+
+# Recommended limits for for mongod as specified in
+# http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
+
 [Install]
 WantedBy=default.target
 " | sudo tee -a "$SERVICE_FILE" >/dev/null
