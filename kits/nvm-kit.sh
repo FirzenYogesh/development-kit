@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
+# run proper init scripts based on execution environment
+# DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
+if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
+    MODE=$(./commons/task-mode.sh "$1")
+    eval "$(./commons/get-os.sh)"
+else
+    MODE=$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/task-mode.sh" | bash -s "$1")
+    eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
+fi
 
 SHELL_DEPENDENCIES="$HOME/.development-tools/.dependencies/shell"
 
