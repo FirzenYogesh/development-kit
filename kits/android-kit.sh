@@ -31,6 +31,9 @@ setEnv() {
             echo 'export PATH="$ANDROID_HOME/platform-tools:$PATH"'
             echo 'export PATH="$ANDROID_SDK_ROOT:$PATH"'
         } >> "$DEVELOPMENT_KIT_PATHS"
+        # shellcheck disable=SC1090
+        # disabling this rule as it is a constant variable
+        source "$DEVELOPMENT_KIT_MAIN"
     fi
 }
 
@@ -53,10 +56,6 @@ if [[ $MODE == "install" ]]; then
     rm cmd-tools.zip
 
     setEnv
-
-    # shellcheck disable=SC1090
-    # disabling this rule as it is a constant variable
-    source "$DEVELOPMENT_KIT_MAIN"
 
     mkdir -p ~/.android
     touch ~/.android/repositories.cfg

@@ -27,6 +27,9 @@ setEnv() {
             echo 'export PATH="$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH"'
             echo 'export PATH="$HOME/.pub-cache/bin:$PATH"'
         } >> "$DEVELOPMENT_KIT_PATHS"
+        # shellcheck disable=SC1090
+        # disabling this rule as it is a constant variable
+        source "$DEVELOPMENT_KIT_MAIN"
     fi
 }
 
@@ -59,9 +62,6 @@ if [[ $MODE == "install" ]]; then
 
         setEnv
 
-        # shellcheck disable=SC1090
-        # disabling this rule as it is a constant variable
-        source "$DEVELOPMENT_KIT_MAIN"
         flutter precache
     else
         flutter upgrade

@@ -60,12 +60,17 @@ switchVersion() {
 }
 
 setEnv() {
-    {
-        echo 'export JAVA_HOME="$DEVELOPMENT_KIT_SDK_HOME/java/current"' 
-    } >> "$DEVELOPMENT_KIT_ENV"
-    {
-        echo 'export PATH="$JAVA_HOME/bin:$PATH"'
-    } >> "$DEVELOPMENT_KIT_PATHS"
+    if [[ -z "$JAVA_HOME" ]]; then
+        {
+            echo 'export JAVA_HOME="$DEVELOPMENT_KIT_SDK_HOME/java/current"' 
+        } >> "$DEVELOPMENT_KIT_ENV"
+        {
+            echo 'export PATH="$JAVA_HOME/bin:$PATH"'
+        } >> "$DEVELOPMENT_KIT_PATHS"
+        # shellcheck disable=SC1090
+        # disabling this rule as it is a constant variable
+        source "$DEVELOPMENT_KIT_MAIN"
+    fi
 }
 
 # shellcheck disable=SC2164
@@ -84,9 +89,7 @@ if [[ $MODE == "install" ]]; then
     tar zxf "$JAVA_FOLDER.$extension" -C "$JAVA_FOLDER" --strip-components 1
     rm "$JAVA_FOLDER.$extension"
     switchVersion
-    if [[ -z "$JAVA_HOME" ]]; then
-        setEnv
-    fi
+    setEnv
 elif [[ $MODE == "uninstall" ]]; then
     rm -rf "$JAVA_FOLDER"
     echo "Please switch the java version if needed"

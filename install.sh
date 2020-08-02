@@ -52,8 +52,8 @@ source $ALIASES"
 
     # Setup Paths
     {
-        echo 'export PATH="$PATH":"$DEVELOPMENT_KIT_HOME/development-kit"'
-        echo 'export PATH="$PATH":"$DEVELOPMENT_KIT_SDK_EXECUTABLES"'
+        echo 'export PATH="$DEVELOPMENT_KIT_HOME/development-kit":"$PATH"'
+        echo 'export PATH="$DEVELOPMENT_KIT_SDK_EXECUTABLES":"$PATH"'
     } >> "$SHELL_PATHS"
 
     # Setup Aliases
