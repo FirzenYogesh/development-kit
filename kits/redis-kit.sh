@@ -92,7 +92,7 @@ macosDaemonFile() {
     if checkIfFileExists "$SERVICE_FILE"; then
         echo "A service file already exists. Skipping the auto generation of the service file"
     else
-        echo "
+        writeToFile "
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
 <plist version=\"1.0\">
@@ -116,7 +116,7 @@ macosDaemonFile() {
         <string>$REDIS_LOG/redis.log</string>
     </dict>
 </plist>
-" | sudo tee -a "$SERVICE_FILE" >/dev/null
+" "$SERVICE_FILE" true
     fi
 }
 
@@ -146,7 +146,7 @@ PIDFile=$WORKSPACE/redis.pid
 
 [Install]
 WantedBy=default.target
-" "$SERVICE_FILE" >/dev/null true
+" "$SERVICE_FILE" true
         if checkIfFileExists "$LOCAL_USER_SERVICE_FILE"; then
             echo "A soft link already exists"
         else
