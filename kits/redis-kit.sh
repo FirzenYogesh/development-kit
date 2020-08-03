@@ -12,7 +12,7 @@ else
     eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
 fi
 
-if ! command -v make &> /dev/null; then
+if ! commandExists make &> /dev/null; then
     if [[ $OS == "linux" ]]; then
         if [[ $OS_VARIENT == "ubuntu" ]] || [[ $OS_VARIENT == "debian" ]]; then
             sudo apt install -y make build-essential tcl
@@ -192,7 +192,7 @@ if [[ $MODE == "install" ]]; then
 
     switchVersion
 
-    if ! command -v redis-cli &> /dev/null || ! command -v redis-server &> /dev/null ; then
+    if ! commandExists redis-cli || ! commandExists redis-server; then
         setExecutables
     fi
     setEnv
