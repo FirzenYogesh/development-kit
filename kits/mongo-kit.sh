@@ -99,7 +99,7 @@ processManagement:
 macosDaemonFile() {
 echo "
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
 <plist version=\"1.0\">
     <dict>
         <key>Label</key>
@@ -132,7 +132,7 @@ echo "
         </dict>
     </dict>
 </plist>
-" | sudo tee -a "$SERVICE_FILE" >/dev/null
+" | tee -a "$SERVICE_FILE" >/dev/null
 }
 
 linuxDaemonFile() {
@@ -242,7 +242,7 @@ if [[ $MODE == "install" ]]; then
             systemctl --user enable mongod.service
         elif [[ $OS == "macos" ]]; then
             macosDaemonFile
-
+            launchctl load "$SERVICE_FILE"
             launchctl start development-kit.mongodb
             launchctl enable development-kit.mongodb
         fi
@@ -272,6 +272,7 @@ elif [[ $MODE == "uninstall" ]]; then
     elif [[ $MODE == "macos" ]]; then
         launchctl stop development-kit.mongodb
         launchctl disable development-kit.mongodb
+        launchctl unload "$SERVICE_FILE"
     fi
 
     rm -rf "$FOLDER_NAME"

@@ -94,11 +94,11 @@ macosDaemonFile() {
     else
         writeToFile "
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
 <plist version=\"1.0\">
     <dict>
         <key>Label</key>
-        <string>development-kit.redis</string>
+        <string>development-kit.redis-server</string>
         <key>ProgramArguments</key>
         <array>
             <string>$REDIS_HOME/current/src/redis-server</string>
@@ -116,7 +116,7 @@ macosDaemonFile() {
         <string>$REDIS_LOG/redis.log</string>
     </dict>
 </plist>
-" "$SERVICE_FILE" true
+" "$SERVICE_FILE"
     fi
 }
 
@@ -206,7 +206,7 @@ if [[ $MODE == "install" ]]; then
         systemctl --user enable redis-server.service
     elif [[ $OS == "macos" ]]; then
         macosDaemonFile
-
+        launchctl load "$SERVICE_FILE"
         launchctl start development-kit.redis-server
         launchctl enable development-kit.redis-server
     fi
@@ -235,6 +235,7 @@ elif [[ $MODE == "uninstall" ]]; then
     elif [[ $MODE == "macos" ]]; then
         launchctl stop development-kit.redis-server
         launchctl disable development-kit.redis-server
+        launchctl unload "$SERVICE_FILE"
     fi
 
     rm -rf "$FOLDER_NAME"
