@@ -20,8 +20,8 @@ softLink() {
 writeToFile() {
     local content=$1
     local file=$2
-    local sudo=$3
-    if sudo; then
+    local privileged=$3
+    if privileged; then
         echo "$1" | sudo tee -a "$file" >/dev/null
     else
         echo "$1" | tee -a "$file" >/dev/null
