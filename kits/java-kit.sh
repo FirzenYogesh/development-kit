@@ -32,8 +32,10 @@ getJDKLink() {
     if [[ -z "$version" ]]; then
         version="jdk8"
     fi
-    url=$(echo "https://api.adoptopenjdk.net/v3/assets/latest/${version/jdk/''}/hotspot")
-    echo $url
+    stripped_version="${version/jdk/''}"
+    echo "Fetching jdk$stripped_version"
+    url=$(echo "https://api.adoptopenjdk.net/v3/assets/latest/$stripped_version/hotspot")
+    echo "Retrieving $version from $url"
     raw=$(curl "$url")
     for k in $(echo "$raw" | jq '. | keys | .[]'); do
         value=$(echo "$raw" | jq ".[$k]");
