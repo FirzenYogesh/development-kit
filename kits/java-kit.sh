@@ -32,7 +32,7 @@ getJDKLink() {
     if [[ -z "$version" ]]; then
         version="jdk8"
     fi
-    stripped_version="${version/jdk/''}"
+    stripped_version=$(echo "$version" | sed "s/jdk//")
     echo "Fetching jdk$stripped_version"
     url=$(echo "https://api.adoptopenjdk.net/v3/assets/latest/$stripped_version/hotspot")
     echo "Retrieving $version from $url"
