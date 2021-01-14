@@ -17,7 +17,7 @@ JAVA_HOME_PARENT="$DEVELOPMENT_KIT_SDK_HOME/java"
 mkdir -p "$JAVA_HOME_PARENT"
 
 if ! command -v jq &> /dev/null; then
-    mkdir -p "$DEVELOPMENT_KIT_SDK_EXECUTABLES" && cd "$_"
+    mkdir -p "$DEVELOPMENT_KIT_EXECUTABLES" && cd "$_"
     if [[ $OS == "linux" ]]; then
         wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
     elif [[ $OS == "macos" ]]; then
