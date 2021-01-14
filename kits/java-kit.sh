@@ -32,7 +32,7 @@ getJDKLink() {
     if [[ -z "$version" ]]; then
         version="jdk8"
     fi
-    url="https://api.adoptopenjdk.net/v3/assets/latest/${version/jdk/''}/hotspot"
+    url=$(echo "https://api.adoptopenjdk.net/v3/assets/latest/${version/jdk/''}/hotspot")
     raw=$(curl "$url")
     for k in $(echo "$raw" | jq '. | keys | .[]'); do
         value=$(echo "$raw" | jq ".[$k]");
