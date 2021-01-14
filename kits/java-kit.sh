@@ -32,7 +32,9 @@ getJDKLink() {
     if [[ -z "$version" ]]; then
         version="jdk8"
     fi
-    raw=$(curl "https://api.adoptopenjdk.net/v3/assets/latest/${version/jdk/''}/hotspot")
+    $url="https://api.adoptopenjdk.net/v3/assets/latest/${version/jdk/''}/hotspot"
+    echo "fetching jdk from $url"
+    raw=$(curl "$url")
     for k in $(echo "$raw" | jq '. | keys | .[]'); do
         value=$(echo "$raw" | jq ".[$k]");
         json_os=$(echo "$value" | jq -r '.binary.os')
