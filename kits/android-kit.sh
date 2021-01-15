@@ -40,7 +40,7 @@ if [[ $MODE == "install" ]]; then
     cd "$WORKSPACE"
     if [[ "$OS" == "linux"* ]]; then
         wget -O cmd-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip
-    elif [[ "$OS" == "darwin"* ]]; then
+    elif [[ "$OS" == "macos"* ]]; then
         wget -O cmd-tools.zip https://dl.google.com/android/repository/commandlinetools-mac-6609375_latest.zip
     else
         wget -O cmd-tools.zip https://dl.google.com/android/repository/commandlinetools-win-6609375_latest.zip
