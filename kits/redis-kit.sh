@@ -51,7 +51,7 @@ if [[ $MODE == "install" ]]; then
     echo "Dowloading Redis from $link"
     file="redis-$REDIS_FOLDER.tar.gz"
     wget -O "$file" "$link"
-    tar zxf "$file" -C "$REDIS_FOLDER"
+    tar zxf "$file" -C "$REDIS_FOLDER" --strip-components 1
     rm "$file"
     cd "$REDIS_FOLDER"
     make
