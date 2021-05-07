@@ -128,7 +128,7 @@ switchVersion() {
 
 setEnv() {
     {
-        echo 'export REDIS_HOME="$DEVELOPMENT_KIT_SDK_HOME/redis/current"' 
+        echo 'export REDIS_HOME="$DEVELOPMENT_KIT_DB_HOME/redis/current"' 
     } >> "$DEVELOPMENT_KIT_ENV"
     {
         echo 'export PATH="$REDIS_HOME/src:$PATH"'
