@@ -22,7 +22,7 @@ executeTask() {
         executeOnSelf "$mode" "$3"
     else
         if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
-            eval "$(./kits/$tool-kit.sh)"
+            ./kits/"$tool"-kit.sh
         else
             curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/kits/$tool-kit.sh" | bash -s "$mode" "$3"
         fi

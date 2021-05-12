@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # run proper init scripts based on execution environment
 # DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
+KIT=Homebrew
 if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
     MODE=$(./commons/task-mode.sh "$1")
     eval "$(./commons/get-os.sh)"
@@ -16,9 +17,12 @@ fi
 
 if [[ $MODE == "install" ]]; then
     if  command -v brew &> /dev/null; then
+        echo "Homebrew already exists, updating..."
         brew update
+    else
+        echo "Homebrew does not exist, installing..."
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 elif [[ $MODE == "uninstall" ]]; then
     if  command -v brew &> /dev/null; then
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
@@ -26,3 +30,6 @@ elif [[ $MODE == "uninstall" ]]; then
         echo "homebrew is not installed"
     fi
 fi
+
+echo "Done $KIT $MODE"
+exit 1
