@@ -2,7 +2,7 @@
 # shellcheck disable=SC2016
 # disabling this entirely in the current file 
 # because we need to maintain the string
-
+KIT=flutter
 # run proper init scripts based on execution environment
 # DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
 if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
@@ -103,3 +103,5 @@ elif [[ $MODE == "uninstall" ]]; then
         fi
     fi
 fi
+echo "Done $KIT $MODE"
+exit 0

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+KIT=redis
 # run proper init scripts based on execution environment
 # DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
 if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
@@ -187,3 +188,5 @@ elif [[ $MODE == "switch" ]]; then
 elif [[ $MODE == "fix-env" ]]; then
     setEnv
 fi
+echo "Done $KIT $MODE"
+exit 0

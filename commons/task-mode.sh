@@ -17,3 +17,4 @@ else
 fi
 
 echo $MODE
+exit 0

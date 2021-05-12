@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+KIT=docker
 # run proper init scripts based on execution environment
 # DEVLOPMENT_KIT_EXEC_ENV is not set in production to avoid hinderance
 if [[ "$DEVLOPMENT_KIT_EXEC_ENV" == "dev" ]]; then
@@ -60,3 +61,5 @@ elif [[ $MODE == "uninstall" ]]; then
     fi
     sudo rm -rf /var/lib/docker  
 fi
+echo "Done $KIT $MODE"
+exit 0
