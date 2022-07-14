@@ -62,18 +62,7 @@ if [[ $MODE == "install" ]]; then
     touch ~/.android/repositories.cfg
 
     yes | sdkmanager --sdk_root="${ANDROID_HOME}" tools
-    yes | sdkmanager "platforms;android-29" 
-    yes | sdkmanager "platforms;android-30"
-    yes | sdkmanager "platform-tools"
-    yes | sdkmanager "cmdline-tools;latest"
-    yes | sdkmanager "patcher;v4"
-    yes | sdkmanager "emulator"
-    yes | sdkmanager "build-tools;30.0.1"
-    yes | sdkmanager "extras;android;m2repository"
-    yes | sdkmanager "extras;google;auto"
-    yes | sdkmanager "extras;google;google_play_services"
-    yes | sdkmanager "extras;google;instantapps"
-    yes | sdkmanager "extras;google;market_licensing"
+    yes | sdkmanager "platforms;android-33" "platforms;android-32" "platform-tools" "cmdline-tools;latest" "patcher;v4" "emulator" "build-tools;33.0.0" "extras;android;m2repository" "extras;google;auto" "extras;google;google_play_services" "extras;google;instantapps" "extras;google;market_licensing"
     yes | sdkmanager --licenses
 elif [[ $MODE == "fix-env" ]]; then
     setEnv
