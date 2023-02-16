@@ -12,6 +12,12 @@ else
     eval "$(curl -o- "https://raw.githubusercontent.com/FirzenYogesh/development-kit/main/commons/get-os.sh" | bash)"
 fi
 
+sudoCommand=""
+
+if [[ "$EUID" -ne 0 ]]; then
+    sudoCommand="sudo "
+fi
+
 mkdir -p "$DEVELOPMENT_KIT_SDK_HOME"
 
 setEnv() {
@@ -45,12 +51,12 @@ if [[ $MODE == "install" ]]; then
     if ! command -v flutter &> /dev/null; then
         # Pre-requisite
         if [[ "$OS" == "linux"* ]]; then
-            sudo apt update
-            sudo apt install -y unzip zip curl git xz-utils
+            eval "${sudoCommand}apt update"
+            eval "${sudoCommand}apt install -y unzip zip curl git xz-utils"
             if [[ $OS_VARIENT == "ubuntu" ]] || [[ $OS_VARIENT == "debian" ]]; then
-                sudo apt install -y libglu1-mesa
+                eval "${sudoCommand}apt install -y libglu1-mesa"
             elif [[ $OS_VARIENT == "fedora" ]]; then
-                sudo dnf -y install mesa-libGLU
+                eval "${sudoCommand}dnf -y install mesa-libGLU"
             fi
         fi
 
