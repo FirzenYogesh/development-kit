@@ -52,7 +52,7 @@ if [[ $MODE == "install" ]]; then
         # Pre-requisite
         if [[ "$OS" == "linux"* ]]; then
             eval "${sudoCommand}apt update"
-            eval "${sudoCommand}apt install -y unzip zip curl git xz-utils"
+            eval "${sudoCommand}apt install -y unzip zip curl git xz-utils clang cmake ninja-build pkg-config"
             if [[ $OS_VARIENT == "ubuntu" ]] || [[ $OS_VARIENT == "debian" ]]; then
                 eval "${sudoCommand}apt install -y libglu1-mesa"
             elif [[ $OS_VARIENT == "fedora" ]]; then
